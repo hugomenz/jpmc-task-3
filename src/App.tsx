@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import DataStreamer, { ServerRespond } from './DataStreamer';
-import Graph from './Graph';
+import DataStreamer from './components/DataStreamer';
+import Graph from './components/graph/Graph';
 import './App.css';
-
-interface IState {
-  data: ServerRespond[],
-  showGraph: boolean,
-}
+import { ServerRespond } from './interfaces/data-streamer.interfaces';
+import { IState } from './interfaces/app.interfaces';
 
 class App extends Component<{}, IState> {
   constructor(props: {}) {
@@ -27,10 +24,12 @@ class App extends Component<{}, IState> {
     let x = 0;
     const interval = setInterval(() => {
       DataStreamer.getData((serverResponds: ServerRespond[]) => {
+
         this.setState({
           data: serverResponds,
           showGraph: true,
         });
+        //console.log(`${serverResponds}`)
       });
       x++;
       if (x > 1000) {
